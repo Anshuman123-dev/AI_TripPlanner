@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 5000;
 // In your server.js
 app.use(cors({
   origin: [
-    'https://ai-trip-planner-lemon.vercel.app/',
+    'https://ai-trip-planner-lemon.vercel.app',
     'http://localhost:3000' // For local development
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
