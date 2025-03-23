@@ -25,7 +25,7 @@ export const SelectTravelsList = [
         id:4,
         title:'Friends',
         desc:'A bunch of thrill-seeks',
-        icon:'👨‍👨‍👧‍',
+        icon:'😎',
         people:'5 to 10 People'
     }
 
@@ -44,13 +44,13 @@ export const SelectBudgetOptions = [
         id:2,
         title:'Moderate',
         desc:'Balanced budget',
-        icon:'💰💰',
+        icon:'💸',
     },
     {
         id:3,
         title:'Expensive',
         desc:'Money is not a problem',
-        icon:'💰💰💰',
+        icon:'🤑',
     }
 ]
 

@@ -126,12 +126,34 @@ import axios from 'axios'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { GetPlaceDetails, PHOTO_REF_URL } from '@/service/GlobalApi'
+import { Trash2 } from 'lucide-react'
+
 
 function MyTrips() {
     const [trips, setTrips] = useState([])
     const [loading, setLoading] = useState(true)
     const [photoUrls, setPhotoUrls] = useState({})
     const navigate = useNavigate()
+
+
+    const deleteTrip = async (tripId, e) => {
+        // Stop the click event from bubbling up to the parent
+        e.stopPropagation();
+        
+        if (window.confirm('Are you sure you want to delete this trip?')) {
+          try {
+            await axios.delete(`http://localhost:5000/api/trips/${tripId}`);
+            
+            // Update state to remove the deleted trip
+            setTrips(prevTrips => prevTrips.filter(trip => trip._id !== tripId));
+            
+            toast.success('Trip deleted successfully');
+          } catch (error) {
+            console.error('Error deleting trip:', error);
+            toast.error(error.response?.data?.message || 'Failed to delete trip');
+          }
+        }
+      }
 
     useEffect(() => {
         const fetchTripsAndPhotos = async () => {
@@ -218,9 +240,17 @@ function MyTrips() {
                     {trips.map((trip) => (
                         <div 
                             key={trip._id}
-                            className="border rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
+                            className="border rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer relative"
                             onClick={() => navigate(`/trip/${trip._id}`)}
                         >
+
+<div 
+      className="absolute top-2 right-2 z-10 p-2 bg-white/80 rounded-full hover:bg-red-100 transition-colors"
+      onClick={(e) => deleteTrip(trip._id, e)}
+    >
+      <Trash2 size={18} className="text-red-500" />
+    </div>
+
                             <div className="h-48 bg-gray-100 flex items-center justify-center relative">
                                 {photoUrls[trip._id] ? (
                                     <>

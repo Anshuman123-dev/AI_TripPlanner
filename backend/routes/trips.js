@@ -163,3 +163,19 @@ router.get('/:id', async (req, res) => {
 });
 
 module.exports = router;
+
+// New DELETE route to remove a trip
+router.delete('/:id', async (req, res) => {
+  try {
+    const trip = await Trip.findByIdAndDelete(req.params.id);
+    
+    if (!trip) {
+      return res.status(404).json({ message: 'Trip not found' });
+    }
+    
+    res.status(200).json({ message: 'Trip deleted successfully', trip });
+  } catch (error) {
+    console.error('Error deleting trip:', error);
+    res.status(500).json({ message: 'Error deleting trip' });
+  }
+});
