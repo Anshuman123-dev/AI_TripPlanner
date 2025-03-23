@@ -137,12 +137,13 @@ function MyTrips() {
 
 
     const deleteTrip = async (tripId, e) => {
+        const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'
         // Stop the click event from bubbling up to the parent
         e.stopPropagation();
         
         if (window.confirm('Are you sure you want to delete this trip?')) {
           try {
-            await axios.delete(`http://localhost:5000/api/trips/${tripId}`);
+            await axios.delete(`${API_URL}/api/trips/${tripId}`);
             
             // Update state to remove the deleted trip
             setTrips(prevTrips => prevTrips.filter(trip => trip._id !== tripId));
@@ -164,9 +165,10 @@ function MyTrips() {
             }
 
             try {
+                const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'
                 // Fetch user trips
                 const tripsResponse = await axios.get(
-                    `http://localhost:5000/api/trips/user/${user._id}`
+                    `${API_URL}/api/trips/user/${user._id}`
                 )
                 const tripsData = tripsResponse.data
                 setTrips(tripsData)

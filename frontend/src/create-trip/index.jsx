@@ -941,6 +941,7 @@ const CreateTrip = () => {
 
   // Fetch user profile from Google and save to backend
   const GetUserProfile = (tokenInfo) => {
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'
     axios
       .get(
         `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${tokenInfo?.access_token}`,
@@ -959,7 +960,7 @@ const CreateTrip = () => {
           picture: res.data.picture,
         };
         axios
-          .post("http://localhost:5000/api/users", userData)
+          .post(`${API_URL}/api/users`, userData)
           .then((response) => {
             localStorage.setItem("user", JSON.stringify(response.data));
             setOpenDialog(false);

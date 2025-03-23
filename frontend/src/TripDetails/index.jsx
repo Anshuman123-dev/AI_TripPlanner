@@ -470,6 +470,7 @@ import HotelCard from "@/components/HotelCaed";
 import ItineraryDay from "@/components/tripDetails/IteneraryDay";
 import { FiCalendar, FiDollarSign, FiUsers, FiHeart, FiHome, FiMap, FiTrendingUp } from "react-icons/fi";
 
+
 const TripDetails = () => {
   const [photoUrl, setPhotoUrl] = useState();
   const { id } = useParams(); // Get trip ID from URL
@@ -485,7 +486,9 @@ const TripDetails = () => {
       setLoading(true);
       const fetchTripData = async () => {
         try {
-          const response = await axios.get(`http://localhost:5000/api/trips/${id}`);
+          // Use environment variable for API URL instead of hardcoded localhost
+          const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+          const response = await axios.get(`${API_URL}/api/trips/${id}`);
           setTrip(response.data);
           setIsSaved(true);
         } catch (error) {
