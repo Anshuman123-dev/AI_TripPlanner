@@ -11,7 +11,15 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors()); // Allow cross-origin requests
+// In your server.js
+app.use(cors({
+  origin: [
+    'https://ai-trip-planner-lemon.vercel.app/',
+    'http://localhost:3000' // For local development
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+})); // Allow cross-origin requests
 app.use(bodyParser.json({ limit: '10mb' })); // Increased limit for large AI responses
 app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 
